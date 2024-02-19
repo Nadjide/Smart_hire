@@ -25,8 +25,7 @@ c.execute('''
 c.execute('''
     CREATE TABLE Questionnaires (
         ID_Questionnaire INTEGER PRIMARY KEY,
-        Titre TEXT,
-        Description TEXT,
+        catégorie TEXT,
         Questions TEXT
     )
 ''')
@@ -44,13 +43,16 @@ c.execute('''
 ''')
 
 c.execute('''
-    CREATE TABLE Statistiques (
+      CREATE TABLE Statistiques (
         ID_Statistique INTEGER PRIMARY KEY,
         Email TEXT,
         Catégorie TEXT,
+        Score_Total INTEGER,
         Valeur REAL,
         Date_Mesure TEXT,
         FOREIGN KEY(Email) REFERENCES Candidats(Email)
+    
+        
     )
 ''')
 
