@@ -5,7 +5,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeBaseProvider } from "native-base";
 import { LogBox } from "react-native";
 import LoginScreen from "./screens/LoginScreen";
+import LoginCandidatScreen from "./screens/LoginCandidatScreen";
 import HomeScreen from "./screens/HomeScreen";
+import LandingScreen from "./screens/LandingScreen";
+import QuestionScreen from "./screens/QuestionScreen";
 import { Ionicons } from "@expo/vector-icons";
 
 LogBox.ignoreLogs([
@@ -52,13 +55,28 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
+          name="Landing"
+          component={LandingScreen}
+          options={{ headerShown: false }}
+          />
+          <Stack.Screen
             name="Login"
             component={LoginScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen
+            name="LoginCandidat"
+            component={LoginCandidatScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
             name="Home"
             component={MyTabs}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Question"
+            component={QuestionScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

@@ -43,7 +43,7 @@ export default function LoginScreen({ navigation }) {
               _text={{ color: "white" }}
               onPress={() => navigation.navigate('Home', { screen: 'Home' })}
             >
-              Sign In
+              Connexion
             </Button>
           </VStack>
         </Box>

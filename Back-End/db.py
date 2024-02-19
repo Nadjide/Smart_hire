@@ -17,8 +17,7 @@ c.execute('''
         Nom TEXT,
         Prénom TEXT,
         Date_de_naissance TEXT,
-        Téléphone TEXT,
-        FOREIGN KEY(Email) REFERENCES User(Email)
+        Téléphone TEXT
     )
 ''')
 
@@ -26,7 +25,6 @@ c.execute('''
     CREATE TABLE Questionnaires (
         ID_Questionnaire INTEGER PRIMARY KEY,
         Titre TEXT,
-        Description TEXT,
         Questions TEXT
     )
 ''')
