@@ -8,15 +8,6 @@ app = FastAPI()
 def get_db_connection():
     return sqlite3.connect('database.db')
 
-@app.post("/register/user")
-def register_user(user: User):
-    conn = get_db_connection()
-    c = conn.cursor()
-    c.execute("INSERT INTO User (Email, password) VALUES (?, ?)", (user.email, user.password))
-    conn.commit()
-    conn.close()
-    return {"status": "success"}
-
 @app.post("/register/candidat")
 def register_candidat(candidate: Candidate):
     conn = get_db_connection()

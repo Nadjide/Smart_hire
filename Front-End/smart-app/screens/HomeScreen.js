@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import { Box, Text, VStack, HStack, Avatar, Spacer, Pressable, IconButton, Icon, Input } from 'native-base';
 import { AntDesign, Fontisto } from '@expo/vector-icons';
 
 export default function HomeScreen() {
+  const [searchText, setSearchText] = useState('');
   const users = [
     { id: '1', name: 'Charlotte Reynolds', location: 'Nice', review: 'Dernière revue', latestReview: 'Lorem ipsum ...' },
     { id: '2', name: 'Robert Reynolds', location: 'Nice', review: 'Dernière revue', latestReview: 'Lorem ipsum ...' },
     { id: '3', name: 'Loise Reynolds', location: 'Nice', review: 'Dernière revue', latestReview: 'Lorem ipsum ...' },
   ];
+
+  const filteredUsers = users.filter(user =>
+    user.name.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   return (
     <VStack flex={1} bg="white">
@@ -20,6 +25,8 @@ export default function HomeScreen() {
           py="3"
           px="1"
           fontSize="14"
+          value={searchText}
+          onChangeText={setSearchText}
           InputLeftElement={
             <Icon
               m="2"
@@ -32,7 +39,7 @@ export default function HomeScreen() {
         />
       </Box>
       <FlatList
-        data={users}
+        data={filteredUsers}
         horizontal
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (

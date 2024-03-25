@@ -1,9 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
 import { Button, Text, Input, VStack, Center, Box, Icon } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 
 export default function LoginScreen({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      setError("Tous les champs sont obligatoires");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://10.6.0.107:8000/login/admin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (data.status === "success") {
+        navigation.navigate("Home", { screen: "Home" });
+        console.log(data);
+      } else {
+            setError("Identifiants invalidess");
+          }
+        } catch (error) {
+          console.log(error);
+          setError("Une erreur s'est produite");
+    }
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -23,6 +56,8 @@ export default function LoginScreen({ navigation }) {
                 />
               }
               placeholder="Email"
+              value={email}
+              onChangeText={setEmail}
             />
             <Input
               InputRightElement={
@@ -36,12 +71,15 @@ export default function LoginScreen({ navigation }) {
               }
               placeholder="Mot de passe"
               type="password"
+              value={password}
+              onChangeText={setPassword}
             />
             <Button
               mt="2"
               colorScheme="blue"
               _text={{ color: "white" }}
-              onPress={() => navigation.navigate('Home', { screen: 'Home' })}
+              onPress={() => navigation.navigate("Home")}
+              // onPress={handleLogin}
             >
               Connexion
             </Button>
