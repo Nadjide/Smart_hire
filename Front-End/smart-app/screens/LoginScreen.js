@@ -1,41 +1,54 @@
-import React, { useState } from "react";
-import { StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
+import React, { useState, useContext } from "react";
+import AuthContext from "../AuthContext";
+import { StyleSheet, KeyboardAvoidingView, Platform, Alert } from "react-native";
 import { Button, Text, Input, VStack, Center, Box, Icon } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 
 export default function LoginScreen({ navigation }) {
+  const { setIsLoggedIn, setUserEmail } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
   const handleLogin = async () => {
-    if (!email || !password) {
-      setError("Tous les champs sont obligatoires");
-      return;
-    }
+  if (!email || !password) {
+    setError("Tous les champs sont obligatoires");
+    return;
+  }
 
-    try {
-      const response = await fetch("http://10.6.0.107:8000/login/admin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (data.status === "success") {
-        navigation.navigate("Home", { screen: "Home" });
-        console.log(data);
-      } else {
-            setError("Identifiants invalidess");
-          }
-        } catch (error) {
-          console.log(error);
-          setError("Une erreur s'est produite");
-    }
+  const data = {
+    email: email,
+    password: password,
   };
+
+  try {
+    const response = await fetch("http://10.6.0.107:8000/admin/connexion/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    });
+
+    const responseData = await response.json();
+    console.log(responseData);
+
+    if (response.status === 200) {
+      setIsLoggedIn(true);
+      setUserEmail(responseData[0].email);
+      console.log(responseData[0].email);
+      navigation.navigate("Home");
+    } else {
+      setError("Identifiants invalides");
+    }
+  } catch (error) {
+    console.error(error);
+    Alert.alert("Erreur", error.message);
+  }
+};
 
   return (
     <KeyboardAvoidingView
@@ -66,7 +79,7 @@ export default function LoginScreen({ navigation }) {
                   size={5}
                   mr="2"
                   color="muted.400"
-                  onPress={() => {}}
+                  onPress={() => { }}
                 />
               }
               placeholder="Mot de passe"
@@ -78,8 +91,7 @@ export default function LoginScreen({ navigation }) {
               mt="2"
               colorScheme="blue"
               _text={{ color: "white" }}
-              onPress={() => navigation.navigate("Home")}
-              // onPress={handleLogin}
+              onPress={handleLogin}
             >
               Connexion
             </Button>

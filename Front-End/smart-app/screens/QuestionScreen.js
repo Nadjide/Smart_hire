@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import {
     VStack,
     Box,
@@ -10,8 +10,12 @@ import {
     Image,
     Flex,
 } from "native-base";
+import AuthContext from '../AuthContext';
 
 export default function QuestionScreen() {
+
+    const { userEmail } = useContext(AuthContext);
+
     const [questions, setQuestions] = useState([
         {
             title: "La question 1 ?",
@@ -66,6 +70,7 @@ export default function QuestionScreen() {
                 alt="Smart Hire Logo"
                 style={{ height: 150, width: 150, marginBottom: 10 }}
             />
+            <Text>Email de l'utilisateur : {userEmail}</Text>
             <Box safeArea p="2" w="90%" maxW="340">
                 <VStack space={5} mt="4">
                     <Heading size="lg" textAlign="center" mb="4">

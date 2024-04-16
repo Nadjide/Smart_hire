@@ -1,23 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import { Box, Text, VStack, HStack, Avatar, Spacer, Pressable, IconButton, Icon, Input } from 'native-base';
 import { AntDesign, Fontisto } from '@expo/vector-icons';
+import AuthContext from '../AuthContext';
 
 export default function HomeScreen() {
   const [searchText, setSearchText] = useState('');
-  const users = [
-    { id: '1', name: 'Charlotte Reynolds', location: 'Nice', review: 'Dernière revue', latestReview: 'Lorem ipsum ...' },
-    { id: '2', name: 'Robert Reynolds', location: 'Nice', review: 'Dernière revue', latestReview: 'Lorem ipsum ...' },
-    { id: '3', name: 'Loise Reynolds', location: 'Nice', review: 'Dernière revue', latestReview: 'Lorem ipsum ...' },
-  ];
+  const [candidats, setCandidats] = useState([]);
+  const { userEmail } = useContext(AuthContext);
 
-  const filteredUsers = users.filter(user =>
-    user.name.toLowerCase().includes(searchText.toLowerCase())
+  useEffect(() => {
+    const fetchCandidats = async () => {
+      try {
+        const response = await fetch('http://10.6.0.107:8000/candidats/');
+        const data = await response.json();
+        setCandidats(data);
+      } catch (error) {
+        console.error("Failed to fetch candidats:", error);
+      }
+    };
+
+    fetchCandidats();
+  }, []);
+
+  const filteredCandidats = candidats.filter(candidat =>
+    (candidat.nom && candidat.nom.toLowerCase().includes(searchText.toLowerCase())) ||
+    (candidat.prénom && candidat.prénom.toLowerCase().includes(searchText.toLowerCase()))
   );
 
   return (
     <VStack flex={1} bg="white">
-        <Box px="4" pt="4" pb="2">
+      <Box px="4" pt="4" pb="2">
         <Input
           placeholder="Rechercher"
           width="100%"
@@ -38,8 +51,9 @@ export default function HomeScreen() {
           }
         />
       </Box>
+      <Text>Email de l'utilisateur : {userEmail}</Text>
       <FlatList
-        data={filteredUsers}
+        data={filteredCandidats}
         horizontal
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
@@ -57,14 +71,12 @@ export default function HomeScreen() {
               <HStack alignItems="center">
                 <Avatar
                   size="48px"
-                //   source={{
-                //     uri: 'https://your-avatar-url.com',
-                //   }}
+                  // Ajoutez ici l'URL de l'image de l'avatar si disponible
                 />
                 <Spacer />
                 <VStack>
-                  <Text bold>{item.name}</Text>
-                  <Text color="coolGray.600">{item.location}</Text>
+                  <Text bold>{item.nom} {item.prénom}</Text>
+                  <Text color="coolGray.600">{item.email}</Text>
                 </VStack>
                 <Spacer />
                 <IconButton
@@ -79,8 +91,8 @@ export default function HomeScreen() {
                   }}
                 />
               </HStack>
-              <Text color="coolGray.800">{item.review}</Text>
-              <Text color="coolGray.400">{item.latestReview}</Text>
+              <Text color="coolGray.800">Né(e) le: {item.date_de_naissance}</Text>
+              <Text color="coolGray.400">Tél: {item.téléphone}</Text>
             </VStack>
             <Pressable
               mt="3"
@@ -95,12 +107,8 @@ export default function HomeScreen() {
             </Pressable>
           </Box>
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item._id}
       />
     </VStack>
   );
 }
-
-const styles = StyleSheet.create({
-
-});

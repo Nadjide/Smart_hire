@@ -1,0 +1,215 @@
+{
+    "type": "questionnaire",
+    "questions": [
+      {
+        "type": "Général",
+        "items": [
+          {
+            "id": 1,
+            "question": "De quelle manière apprenez-vous le mieux ?",
+            "options": [
+              "En observant et en imitant",
+              "En lisant et en réfléchissant",
+              "En expérimentant et en faisant",
+              "En discutant et en interagissant avec les autres"
+            ]
+          },
+          {
+            "id": 2,
+            "question": "Comment abordez-vous les problèmes complexes ?",
+            "options": [
+              "En recherchant des informations et des données",
+              "En essayant différentes solutions",
+              "En réfléchissant à la situation de manière globale",
+              "En faisant appel à mon intuition"
+            ]
+          },
+          {
+            "id": 3,
+            "question": "Comment prenez-vous des décisions ?",
+            "options": [
+              "En pesant les avantages et les inconvénients de chaque option",
+              "En suivant mon instinct",
+              "En me basant sur mes valeurs",
+              "En tenant compte des besoins des autres"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Caractère",
+        "items": [
+          {
+            "id": 4,
+            "question": "Quelles sont vos motivations principales ?",
+            "options": [
+              "L'accomplissement personnel",
+              "L'aide aux autres",
+              "La sécurité et la stabilité",
+              "Le pouvoir et l'influence"
+            ]
+          },
+          {
+            "id": 5,
+            "question": "Comment réagissez-vous au stress ?",
+            "options": [
+              "Je deviens plus concentré et productif",
+              "Je deviens plus irritable et impatient",
+              "Je deviens plus émotif et sensible",
+              "Je deviens plus distant et réservé"
+            ]
+          },
+          {
+            "id": 6,
+            "question": "Comment voyez-vous l'avenir ?",
+            "options": [
+              "Je suis optimiste et confiant",
+              "Je suis réaliste et prudent",
+              "Je suis sceptique et prudent",
+              "Je suis pessimiste et cynique"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Comportement",
+        "items": [
+          {
+            "id": 7,
+            "question": "Comment organisez-vous votre temps ?",
+            "options": [
+              "Je suis organisé et méticuleux",
+              "Je suis flexible et adaptable",
+              "Je suis spontané et impulsif",
+              "Je suis désorganisé et procrastinateur"
+            ]
+          },
+          {
+            "id": 8,
+            "question": "Comment communiquez-vous avec les autres ?",
+            "options": [
+              "Je suis direct et concis",
+              "Je suis empathique et à l'écoute",
+              "Je suis créatif et imaginatif",
+              "Je suis sociable et extraverti"
+            ]
+          },
+          {
+            "id": 9,
+            "question": "Comment travaillez-vous en équipe ?",
+            "options": [
+              "Je suis un leader et un motivateur",
+              "Je suis un facilitateur et un médiateur",
+              "Je suis un contributeur et un collaborateur",
+              "Je suis un solitaire et un indépendant"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Motivation",
+        "items": [
+          {
+            "id": 10,
+            "question": "Quels sont vos objectifs professionnels ?",
+            "options": [
+              "Avoir un impact positif sur le monde",
+              "Aider les autres à réussir",
+              "Gagner beaucoup d'argent",
+              "Avoir un poste de pouvoir et d'influence"
+            ]
+          },
+          {
+            "id": 11,
+            "question": "Qu'est-ce qui vous motive ?",
+            "options": [
+              "L'accomplissement personnel",
+              "L'aide aux autres",
+              "La réussite matérielle",
+              "Le pouvoir et l'influence"
+            ]
+          },
+          {
+            "id": 12,
+            "question": "Comment vous motivez-vous ?",
+            "options": [
+              "En fixant des objectifs ambitieux",
+              "En vous fixant des défis",
+              "En vous concentrant sur vos forces",
+              "En vous entourant de personnes positives"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Leadership",
+        "items": [
+          {
+            "id": 13,
+            "question": "Comment vous voyez-vous en tant que leader ?",
+            "options": [
+              "Un leader visionnaire et charismatique",
+              "Un leader empathique et collaboratif",
+              "Un leader pragmatique et efficace",
+              "Un leader autoritaire et dominateur"
+            ]
+          },
+          {
+            "id": 14,
+            "question": "Quelles sont vos compétences en communication ?",
+            "options": [
+              "Je suis clair et concis",
+              "Je suis empathique et à l'écoute",
+              "Je suis créatif et imaginatif",
+              "Je suis convaincant et persuasif"
+            ]
+          },
+          {
+            "id": 15,
+            "question": "Comment prenez-vous des décisions en tant que leader ?",
+            "options": [
+              "En pesant les avantages et les inconvénients de chaque option",
+              "En suivant mon instinct",
+              "En me basant sur mes valeurs",
+              "En tenant compte des besoins des autres"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Relations interpersonnelles",
+        "items": [
+          {
+            "id": 16,
+            "question": "Comment communiquez-vous avec les autres ?",
+            "options": [
+              "Je suis direct et concis",
+              "Je suis empathique et à l'écoute",
+              "Je suis créatif et imaginatif",
+              "Je suis sociable et extraverti"
+            ]
+          },
+          {
+            "id": 17,
+            "question": "Comment interagissez-vous avec les autres ?",
+            "options": [
+              "Je suis ouvert et sociable",
+              "Je suis à l'écoute et empathique",
+              "Je suis créatif et imaginatif",
+              "Je suis dominant et autoritaire"
+            ]
+          },
+          {
+            "id": 18,
+            "question": "Comment gérez-vous les conflits dans vos relations interpersonnelles ?",
+            "options": [
+              "Je préfère la diplomatie et la recherche de solutions pacifiques",
+              "Je suis direct et assertif pour résoudre rapidement les conflits",
+              "Je cherche à comprendre les différentes perspectives avant de prendre des mesures",
+              "Je préfère éviter les conflits autant que possible"
+            ]
+          }
+        ]
+      }
+    ]
+  }  

@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\LPT_Nadjide\OneDrive\Images\Documents\BACHELOR 3 INFO\Smart_hire\Back-End\env
+set VIRTUAL_ENV=D:\LPT_Nadjide\Documents\BACHELOR 3 INFO\Smart_hire\Back-End\env
 
 if not defined PROMPT set PROMPT=$P$G
 
