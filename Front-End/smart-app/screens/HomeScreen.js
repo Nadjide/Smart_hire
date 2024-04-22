@@ -3,6 +3,7 @@ import { FlatList, StyleSheet } from 'react-native';
 import { Box, Text, VStack, HStack, Avatar, Spacer, Pressable, IconButton, Icon, Input } from 'native-base';
 import { AntDesign, Fontisto } from '@expo/vector-icons';
 import AuthContext from '../AuthContext';
+import { SERVER_IP } from '../config';
 
 export default function HomeScreen() {
   const [searchText, setSearchText] = useState('');
@@ -12,7 +13,7 @@ export default function HomeScreen() {
   useEffect(() => {
     const fetchCandidats = async () => {
       try {
-        const response = await fetch('http://10.6.0.107:8000/candidats/');
+        const response = await fetch(`${SERVER_IP}/candidats/`);
         const data = await response.json();
         setCandidats(data);
       } catch (error) {

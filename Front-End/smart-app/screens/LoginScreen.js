@@ -3,6 +3,7 @@ import AuthContext from "../AuthContext";
 import { StyleSheet, KeyboardAvoidingView, Platform, Alert } from "react-native";
 import { Button, Text, Input, VStack, Center, Box, Icon } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
+import { SERVER_IP } from "../config";
 
 export default function LoginScreen({ navigation }) {
   const { setIsLoggedIn, setUserEmail } = useContext(AuthContext);
@@ -22,7 +23,7 @@ export default function LoginScreen({ navigation }) {
   };
 
   try {
-    const response = await fetch("http://10.6.0.107:8000/admin/connexion/", {
+    const response = await fetch(`${SERVER_IP}/admin/connexion/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,3 +1,4 @@
+from typing import List
 from pydantic import BaseModel, EmailStr, validator
 
 class Admin(BaseModel):
@@ -18,7 +19,8 @@ class Candidat(BaseModel):
 class Question(BaseModel):
     theme: str
     content: str
+    answers: List[str]
 
 class Questionnaire(BaseModel):
     category: str
-    questions: list[Question]
+    questions: List[Question]

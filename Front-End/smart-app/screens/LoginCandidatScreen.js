@@ -2,6 +2,7 @@ import React, { useState, useContext} from "react";
 import { KeyboardAvoidingView, Platform, Alert } from "react-native";
 import { VStack, Box, Center, Heading, Input, Button } from "native-base";
 import AuthContext from "../AuthContext";
+import { SERVER_IP } from "../config";
 
 export default function LoginCandidatScreen({ navigation }) {
   const { setIsLoggedIn, setUserEmail } = useContext(AuthContext);
@@ -18,7 +19,7 @@ export default function LoginCandidatScreen({ navigation }) {
       throw new Error("La date de naissance doit être au format JJ/MM/AAAA");
     }
 
-    const response = await fetch("http://10.6.0.107:8000/candidats/", {
+    const response = await fetch(`${SERVER_IP}/candidats/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

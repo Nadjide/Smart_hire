@@ -74,7 +74,7 @@ async def create_questionnaire(questionnaire: Questionnaire):
     existing = await app.mongodb.Questionnaires.find_one({"category": questionnaire.category})
     if existing:
         raise HTTPException(status_code=400, detail="Un questionnaire de cette catégorie existe déjà.")
-    result = await app.mongodb.Questionnaires.insert_one(questionnaire.model_dump())
+    result = await app.mongodb.Questionnaires.insert_one(questionnaire.model_dump(by_alias=True))
     return {"id": str(result.inserted_id), "category": questionnaire.category}
 
 @app.get("/questionnaires/{category}", response_model=List[Questionnaire])

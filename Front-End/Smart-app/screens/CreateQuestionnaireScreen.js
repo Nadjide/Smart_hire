@@ -1,27 +1,32 @@
 import React, { useState } from 'react';
-import { VStack, Input, Button, IconButton, Icon, Box, Text, ScrollView, Divider } from 'native-base';
+import { VStack, Input, Button, IconButton, Icon, Box, Text, ScrollView, Select } from 'native-base';
 import { AntDesign } from '@expo/vector-icons';
+import { SERVER_IP } from '../config';
+
+const themes = ["Comportement", "Motivation", "Éthique", "Compétences techniques", "Communication", "Leadership", "Résolution de problèmes", "Travail d'équipe"];
 
 function CreateQuestionnaireScreen() {
   const [category, setCategory] = useState('');
   const [questions, setQuestions] = useState([]);
-  const [currentTheme, setCurrentTheme] = useState('');
+  const [currentTheme, setCurrentTheme] = useState(themes[0]);
   const [currentContent, setCurrentContent] = useState('');
+  const [currentAnswers, setCurrentAnswers] = useState('');
 
   const handleAddQuestion = () => {
-    if (currentTheme && currentContent) {
-      setQuestions([...questions, { theme: currentTheme, content: currentContent }]);
-      setCurrentTheme('');
-      setCurrentContent('');
+    const answersArray = currentAnswers.split(',').map(answer => answer.trim());
+    if (currentTheme && currentContent && answersArray.length === 3) {
+        setQuestions([...questions, { theme: currentTheme, content: currentContent, answers: answersArray }]);
+        setCurrentContent('');
+        setCurrentAnswers('');
     } else {
-      alert('Please fill in both theme and content fields');
+        alert('Veuillez remplir correctement les champs avec 3 réponses');
     }
-  };
+};
 
   const handleSubmit = async () => {
     const body = { category, questions };
     try {
-      const response = await fetch('http://10.6.0.107:8000/questionnaires/', {
+      const response = await fetch(`${SERVER_IP}/questionnaires/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -29,7 +34,9 @@ function CreateQuestionnaireScreen() {
         body: JSON.stringify(body)
       });
       if (!response.ok) throw new Error('Failed to create questionnaire');
-      alert('Questionnaire created successfully!');
+      alert('Questionnaire crée avec succès');
+      setCategory('');
+      setQuestions([]);
     } catch (error) {
       alert('Error: ' + error.message);
     }
@@ -40,18 +47,34 @@ function CreateQuestionnaireScreen() {
       <VStack space={4} mt="5" px="4">
         <Input
           variant="filled"
-          placeholder="Category"
+          placeholder="Catégorie"
           value={category}
           onChangeText={setCategory}
           py="2"
           px="3"
           fontSize="md"
         />
+        <Select
+          selectedValue={currentTheme}
+          minWidth="200"
+          accessibilityLabel="Choose Theme"
+          placeholder="Choisissez un thème"
+          _selectedItem={{
+            bg: "teal.600",
+            endIcon: <Icon as={AntDesign} name="check" size="5" />,
+          }}
+          mt="1"
+          onValueChange={itemValue => setCurrentTheme(itemValue)}
+        >
+          {themes.map((theme, index) => (
+            <Select.Item key={index} label={theme} value={theme} />
+          ))}
+        </Select>
         <Input
           variant="filled"
-          placeholder="Theme"
-          value={currentTheme}
-          onChangeText={setCurrentTheme}
+          placeholder="Contenu de la question"
+          value={currentContent}
+          onChangeText={setCurrentContent}
           py="2"
           px="3"
           fontSize="md"
@@ -59,9 +82,9 @@ function CreateQuestionnaireScreen() {
         />
         <Input
           variant="filled"
-          placeholder="Content"
-          value={currentContent}
-          onChangeText={setCurrentContent}
+          placeholder="Trois réponses séparées par une virgule"
+          value={currentAnswers}
+          onChangeText={setCurrentAnswers}
           py="2"
           px="3"
           fontSize="md"
@@ -81,11 +104,12 @@ function CreateQuestionnaireScreen() {
         />
         {questions.length > 0 && (
           <Box mt="4">
-            <Text fontSize="xl" bold mb="2">Questions Preview:</Text>
+            <Text fontSize="xl" bold mb="2">Prévisualisation des questions</Text>
             {questions.map((q, index) => (
               <Box key={index} bg="light.200" p="2" rounded="md" mb="2">
                 <Text bold>{q.theme}</Text>
                 <Text>{q.content}</Text>
+                <Text fontSize="xs">Réponses: {q.answers.join(', ')}</Text>
               </Box>
             ))}
           </Box>
@@ -95,7 +119,7 @@ function CreateQuestionnaireScreen() {
           colorScheme="cyan"
           onPress={handleSubmit}
         >
-          Submit
+          Envoyer
         </Button>
       </VStack>
     </ScrollView>
