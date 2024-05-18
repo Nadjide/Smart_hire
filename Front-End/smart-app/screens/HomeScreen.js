@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList } from 'react-native';
 import { Box, Text, VStack, HStack, Avatar, Spacer, Pressable, IconButton, Icon, Input } from 'native-base';
 import { AntDesign, Fontisto } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import AuthContext from '../AuthContext';
 import { SERVER_IP } from '../config';
 
@@ -9,6 +10,7 @@ export default function HomeScreen() {
   const [searchText, setSearchText] = useState('');
   const [candidats, setCandidats] = useState([]);
   const { userEmail } = useContext(AuthContext);
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchCandidats = async () => {
@@ -29,16 +31,23 @@ export default function HomeScreen() {
     (candidat.prénom && candidat.prénom.toLowerCase().includes(searchText.toLowerCase()))
   );
 
+  const getInitials = (nom, prénom) => {
+    const firstInitial = nom ? nom.charAt(0).toUpperCase() : '';
+    const secondInitial = prénom ? prénom.charAt(0).toUpperCase() : '';
+    return `${firstInitial}${secondInitial}`;
+  };
+
   return (
     <VStack flex={1} bg="white">
       <Box px="4" pt="4" pb="2">
         <Input
           placeholder="Rechercher"
           width="100%"
-          borderRadius="4"
+          borderRadius="10"
           py="3"
-          px="1"
+          px="3"
           fontSize="14"
+          bg="coolGray.100"
           value={searchText}
           onChangeText={setSearchText}
           InputLeftElement={
@@ -52,34 +61,35 @@ export default function HomeScreen() {
           }
         />
       </Box>
-      <Text>Email de l'utilisateur : {userEmail}</Text>
+      <Box px="4" py="2">
+        <Text fontSize="md" color="gray.500">Email de l'utilisateur : {userEmail}</Text>
+      </Box>
       <FlatList
         data={filteredCandidats}
-        horizontal
-        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <Box
             alignItems="center"
             m="2"
-            bg="coolGray.100"
+            bg="white"
             p="4"
             rounded="lg"
             shadow={2}
-            maxW="80"
-            minW="80"
+            borderWidth={1}
+            borderColor="coolGray.200"
           >
-            <VStack space={2}>
-              <HStack alignItems="center">
+            <VStack space={2} w="100%">
+              <HStack alignItems="center" space={2}>
                 <Avatar
                   size="48px"
-                  // Ajoutez ici l'URL de l'image de l'avatar si disponible
-                />
-                <Spacer />
-                <VStack>
-                  <Text bold>{item.nom} {item.prénom}</Text>
-                  <Text color="coolGray.600">{item.email}</Text>
+                  bg="cyan.500"
+                >
+                  {getInitials(item.nom, item.prénom)}
+                </Avatar>
+                <VStack flex={1}>
+                  <Text bold fontSize="md">{item.nom} {item.prénom}</Text>
+                  <Text color="coolGray.600" fontSize="sm">{item.email}</Text>
                 </VStack>
-                <Spacer />
                 <IconButton
                   icon={<Icon as={AntDesign} name="right" />}
                   borderRadius="full"
@@ -92,23 +102,25 @@ export default function HomeScreen() {
                   }}
                 />
               </HStack>
-              <Text color="coolGray.800">Né(e) le: {item.date_de_naissance}</Text>
-              <Text color="coolGray.400">Tél: {item.téléphone}</Text>
+              <Text color="coolGray.800" fontSize="sm">Né(e) le: {item.date_de_naissance}</Text>
+              <Text color="coolGray.400" fontSize="sm">Tél: {item.téléphone}</Text>
+              <Pressable
+                mt="3"
+                py="2"
+                bg="cyan.500"
+                rounded="full"
+                _pressed={{ bg: "cyan.600" }}
+                onPress={() => navigation.navigate('ProfileCandidat', { candidat: item })}
+              >
+                <Text bold color="white" textAlign="center">
+                  Voir le profil
+                </Text>
+              </Pressable>
             </VStack>
-            <Pressable
-              mt="3"
-              py="3"
-              bg="blue.500"
-              rounded="full"
-              _pressed={{ bg: "blue.600" }}
-            >
-              <Text bold color="white" textAlign="center">
-                Voir le profil
-              </Text>
-            </Pressable>
           </Box>
         )}
         keyExtractor={(item) => item._id}
+        contentContainerStyle={{ paddingBottom: 20 }}
       />
     </VStack>
   );

@@ -8,10 +8,14 @@ import LoginScreen from "./screens/LoginScreen";
 import { AuthProvider } from './AuthContext';
 import LoginCandidatScreen from "./screens/LoginCandidatScreen";
 import CreateQuestionnaireScreen from "./screens/CreateQuestionnaireScreen";
+import EditQuestionnaireScreen from './screens/EditQuestionnaireScreen';
+import QuestionnaireScreen from './screens/QuestionnaireScreen';
 import HomeScreen from "./screens/HomeScreen";
 import LandingScreen from "./screens/LandingScreen";
 import QuestionScreen from "./screens/QuestionScreen";
 import { Ionicons } from "@expo/vector-icons";
+import ParametreScreen from './screens/ParametreScreen';
+import ProfileCandidatScreen from './screens/ProfileCandidatScreen';
 
 LogBox.ignoreLogs([
   "In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.",
@@ -28,8 +32,10 @@ function MyTabs() {
           let iconName;
           if (route.name === "TabHome") {
             iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "CreateQuestionnaire") {
-            iconName = focused ? "add-circle" : "add-circle-outline";
+          } else if (route.name === "Questionnaire") {
+            iconName = focused ? "help-circle" : "help-circle-outline";
+          } else if (route.name === "Parametre") {
+            iconName = focused? "settings-outline" : "settings-outline";
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
@@ -44,10 +50,15 @@ function MyTabs() {
         options={{ title: "Home" }}
       />
       <Tab.Screen
-        name="CreateQuestionnaire"
-        component={CreateQuestionnaireScreen}
-        options={{ title: "Creation Questionnaire" }}
+        name="Questionnaire"
+        component={QuestionnaireScreen}
+        options={{ title: "Questionnaire" }}
       />
+      <Tab.Screen
+      name="Parametre"
+      component={ParametreScreen}
+      options={{ title: "Parametre" }}
+    />
     </Tab.Navigator>
   );
 }
@@ -84,6 +95,21 @@ export default function App() {
               component={QuestionScreen}
               options={{ headerShown: false }}
             />
+            <Stack.Screen
+            name="CreateQuestionnaire"
+            component={CreateQuestionnaireScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="EditQuestionnaire"
+            component={EditQuestionnaireScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+          name="ProfileCandidat"
+          component={ProfileCandidatScreen}
+          options={{ headerShown: false }}
+        />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>
