@@ -16,6 +16,7 @@ import QuestionScreen from "./screens/QuestionScreen";
 import { Ionicons } from "@expo/vector-icons";
 import ParametreScreen from './screens/ParametreScreen';
 import ProfileCandidatScreen from './screens/ProfileCandidatScreen';
+import CompareCandidatesScreen from './screens/CompareCandidatesScreen';
 
 LogBox.ignoreLogs([
   "In React 18, SSRProvider is not necessary and is a noop. You can remove it from your app.",
@@ -35,7 +36,7 @@ function MyTabs() {
           } else if (route.name === "Questionnaire") {
             iconName = focused ? "help-circle" : "help-circle-outline";
           } else if (route.name === "Parametre") {
-            iconName = focused? "settings-outline" : "settings-outline";
+            iconName = focused ? "settings-outline" : "settings-outline";
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
@@ -55,10 +56,10 @@ function MyTabs() {
         options={{ title: "Questionnaire" }}
       />
       <Tab.Screen
-      name="Parametre"
-      component={ParametreScreen}
-      options={{ title: "Parametre" }}
-    />
+        name="Parametre"
+        component={ParametreScreen}
+        options={{ title: "Parametre" }}
+      />
     </Tab.Navigator>
   );
 }
@@ -96,20 +97,25 @@ export default function App() {
               options={{ headerShown: false }}
             />
             <Stack.Screen
-            name="CreateQuestionnaire"
-            component={CreateQuestionnaireScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="EditQuestionnaire"
-            component={EditQuestionnaireScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-          name="ProfileCandidat"
-          component={ProfileCandidatScreen}
-          options={{ headerShown: false }}
-        />
+              name="CreateQuestionnaire"
+              component={CreateQuestionnaireScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="EditQuestionnaire"
+              component={EditQuestionnaireScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ProfileCandidat"
+              component={ProfileCandidatScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Compare"
+              component={CompareCandidatesScreen}
+              options={{ headerShown: false }}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </NativeBaseProvider>

@@ -143,7 +143,14 @@ async def save_responses(response: CandidatResponse):
     return {"_id": str(result.inserted_id), "email": response.email, "questionnaire_category": response.questionnaire_category}, 200
 
 @app.get("/responses/")
-async def get_responses(email: str = Query(...)):
+async def get_responses():
+    responses = []
+    async for response in app.mongodb.Responses.find():
+        responses.append(document_to_dict(response))
+    return responses
+
+@app.get("/responses/{email}")
+async def get_responses_by_email(email: str):
     responses = []
     async for response in app.mongodb.Responses.find({"email": email}):
         responses.append(document_to_dict(response))

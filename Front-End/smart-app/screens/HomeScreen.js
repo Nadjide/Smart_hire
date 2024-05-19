@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { FlatList } from 'react-native';
-import { Box, Text, VStack, HStack, Avatar, Spacer, Pressable, IconButton, Icon, Input } from 'native-base';
+import { Box, Text, VStack, HStack, Avatar, Pressable, IconButton, Icon, Input, Button } from 'native-base';
 import { AntDesign, Fontisto } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import AuthContext from '../AuthContext';
@@ -120,8 +120,21 @@ export default function HomeScreen() {
           </Box>
         )}
         keyExtractor={(item) => item._id}
-        contentContainerStyle={{ paddingBottom: 20 }}
+        contentContainerStyle={{ paddingBottom: 80 }}  // Ensure enough space at the bottom
       />
+      <Box position="absolute" bottom={0} left={0} right={0} p="4" bg="white">
+        <Button
+          onPress={() => navigation.navigate('Compare')}
+          bg="cyan.500"
+          _text={{
+            color: "white",
+            fontSize: "sm",
+            fontWeight: "bold",
+          }}
+        >
+          Comparer
+        </Button>
+      </Box>
     </VStack>
   );
 }
