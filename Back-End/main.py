@@ -1,6 +1,8 @@
 from fastapi import Depends, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 from pymongo import errors
 from bson import ObjectId
 from models import Admin, Candidat, CandidatResponse, Questionnaire, CandidatAnswer, SavedQuestion
@@ -8,6 +10,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 import bcrypt
 from datetime import datetime
 from typing import List
+import os
 
 app = FastAPI()
 
@@ -19,9 +22,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+MONGODB_URI = "mongodb+srv://nadjide:VgSlIjkXOxF1sXia@prod-cluster.cnbxwti.mongodb.net/?retryWrites=true&w=majority&appName=prod-cluster"
+
 async def connect_to_mongo():
-    app.mongodb_client = AsyncIOMotorClient("mongodb://localhost:27017")
+    app.mongodb_client = AsyncIOMotorClient(MONGODB_URI, server_api=ServerApi('1'))
     app.mongodb = app.mongodb_client.SmartHire
+    print ("Connected to MongoDB")
 
 def disconnect_from_mongo():
     if app.mongodb_client:
